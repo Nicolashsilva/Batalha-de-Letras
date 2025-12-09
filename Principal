@@ -6,10 +6,10 @@
 #define MAX_TENTATIVAS 6
 
 // Definição das palavras para cada nível de dificuldade
-const char *palavrasFaceis[] = {"bola", "casa", "gato", "pato", "foca"};
-const char *palavrasMedias[] = {"elefante", "girafa", "tigre", "leopardo", "rinoceronte"};
-const char *palavrasDificeis[] = {"hipopotamo", "ornitorrinco", "chimpanze", "orangotango", "crocodilo"};
-const char *palavrasExpert[] = {"astronauta", "micropaleontologia", "pneumoultramicroscopicosilicovulcanoconiose", "desoxirribonucleico", "anticonstitucionalissimamente"};
+const char *palavrasFaceis[] = {"gato", "cachorro", "peixe", "cobra", "pato"};
+const char *palavrasMedias[] = {"medico", "advogado", "engenheiro", "professor", "bombeiro"};
+const char *palavrasDificeis[] = {"python", "javascript", "cplusplus", "ruby", "typescript"};
+const char *palavrasExpert[] = {"acre", "bahia", "ceara", "goias", "amazonas"};
 
 void escolherPalavra(const char *palavras[], int tamanho, char *palavraEscolhida) {
     srand(time(NULL));
@@ -48,7 +48,7 @@ int todasLetrasForamAdivinhadas(const char *palavra, const char *letrasEscolhida
 
 int main() {
     int nivel;
-    char palavraEscolhida[100];  // Aumentar o tamanho para palavras maiores
+    char palavraEscolhida[20];
     char letrasEscolhidas[26] = {0};
     int tentativas = 0;
 
@@ -57,15 +57,19 @@ int main() {
 
     switch (nivel) {
         case 1:
+            printf("Dica: Animais\n");
             escolherPalavra(palavrasFaceis, sizeof(palavrasFaceis)/sizeof(palavrasFaceis[0]), palavraEscolhida);
             break;
         case 2:
+            printf("Dica: Profissões\n");
             escolherPalavra(palavrasMedias, sizeof(palavrasMedias)/sizeof(palavrasMedias[0]), palavraEscolhida);
             break;
         case 3:
+            printf("Dica: Linguagens de Programação\n");
             escolherPalavra(palavrasDificeis, sizeof(palavrasDificeis)/sizeof(palavrasDificeis[0]), palavraEscolhida);
             break;
         case 4:
+            printf("Dica: Estados do Brasil\n");
             escolherPalavra(palavrasExpert, sizeof(palavrasExpert)/sizeof(palavrasExpert[0]), palavraEscolhida);
             break;
         default:
