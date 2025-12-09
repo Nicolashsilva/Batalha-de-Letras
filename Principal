@@ -5,56 +5,62 @@
 
 #define MAX_TENTATIVAS 6
 
-// Definição das palavras para cada nível de dificuldade
+// Vetores de strings contendo palavras para cada nível de dificuldade
 const char *palavrasFaceis[] = {"gato", "cachorro", "peixe", "cobra", "pato"};
 const char *palavrasMedias[] = {"medico", "advogado", "engenheiro", "professor", "bombeiro"};
 const char *palavrasDificeis[] = {"python", "javascript", "cplusplus", "ruby", "typescript"};
 const char *palavrasExpert[] = {"acre", "bahia", "ceara", "goias", "amazonas"};
 
+// Função para escolher uma palavra aleatória a partir de um vetor de palavras
 void escolherPalavra(const char *palavras[], int tamanho, char *palavraEscolhida) {
-    srand(time(NULL));
-    int indice = rand() % tamanho;
-    strcpy(palavraEscolhida, palavras[indice]);
+    srand(time(NULL)); // Inicializa o gerador de números aleatórios
+    int indice = rand() % tamanho; // Gera um índice aleatório
+    strcpy(palavraEscolhida, palavras[indice]); // Copia a palavra escolhida para o vetor de destino
 }
 
+// Função para verificar se uma letra já foi escolhida anteriormente
 int letraJaFoiEscolhida(char letra, const char *letrasEscolhidas) {
     for (int i = 0; i < strlen(letrasEscolhidas); i++) {
         if (letrasEscolhidas[i] == letra) {
-            return 1;
+            return 1; // Retorna 1 (verdadeiro) se a letra já foi escolhida
         }
     }
-    return 0;
+    return 0; // Retorna 0 (falso) se a letra não foi escolhida
 }
 
+// Função para exibir o progresso do jogador
 void exibirProgresso(const char *palavra, const char *letrasEscolhidas) {
     for (int i = 0; i < strlen(palavra); i++) {
         if (letraJaFoiEscolhida(palavra[i], letrasEscolhidas)) {
-            printf("%c ", palavra[i]);
+            printf("%c ", palavra[i]); // Exibe a letra se ela já foi adivinhada
         } else {
-            printf("_ ");
+            printf("_ "); // Exibe um underline para letras ainda não adivinhadas
         }
     }
     printf("\n");
 }
 
+// Função para verificar se todas as letras da palavra foram adivinhadas
 int todasLetrasForamAdivinhadas(const char *palavra, const char *letrasEscolhidas) {
     for (int i = 0; i < strlen(palavra); i++) {
         if (!letraJaFoiEscolhida(palavra[i], letrasEscolhidas)) {
-            return 0;
+            return 0; // Se houver qualquer letra não adivinhada, retorna 0 (falso)
         }
     }
-    return 1;
+    return 1; // Se todas as letras foram adivinhadas, retorna 1 (verdadeiro)
 }
 
 int main() {
     int nivel;
     char palavraEscolhida[20];
-    char letrasEscolhidas[26] = {0};
+    char letrasEscolhidas[26] = {0}; // Vetor para armazenar as letras já escolhidas
     int tentativas = 0;
 
+    // Solicita que o jogador escolha um nível de dificuldade
     printf("Escolha um nivel de dificuldade (1 = facil, 2 = medio, 3 = dificil, 4 = expert): ");
     scanf("%d", &nivel);
 
+    // Seleciona a palavra baseada no nível de dificuldade e dá uma dica ao jogador
     switch (nivel) {
         case 1:
             printf("Dica: Animais\n");
@@ -77,30 +83,37 @@ int main() {
             return 1;
     }
 
+    // Loop principal do jogo
     while (tentativas < MAX_TENTATIVAS) {
         char letra;
         printf("Tentativas restantes: %d\n", MAX_TENTATIVAS - tentativas);
         exibirProgresso(palavraEscolhida, letrasEscolhidas);
 
+        // Solicita que o jogador digite uma letra
         printf("Digite uma letra: ");
         scanf(" %c", &letra);
 
+        // Verifica se a letra já foi escolhida
         if (letraJaFoiEscolhida(letra, letrasEscolhidas)) {
             printf("Letra ja foi escolhida! Tente outra.\n");
-            continue;
+            continue; // Pula para a próxima iteração do loop
         }
 
+        // Adiciona a letra ao vetor de letras escolhidas
         letrasEscolhidas[strlen(letrasEscolhidas)] = letra;
 
+        // Verifica se a letra não está na palavra escolhida
         if (!strchr(palavraEscolhida, letra)) {
-            tentativas++;
+            tentativas++; // Incrementa o número de tentativas
         }
 
+        // Verifica se todas as letras foram adivinhadas
         if (todasLetrasForamAdivinhadas(palavraEscolhida, letrasEscolhidas)) {
             printf("Parabens! Voce adivinhou a palavra: %s\n", palavraEscolhida);
-            break;
+            break; // Sai do loop se a palavra foi adivinhada
         }
 
+        // Verifica se o número de tentativas foi excedido
         if (tentativas >= MAX_TENTATIVAS) {
             printf("Fim de jogo! A palavra era: %s\n", palavraEscolhida);
         }
