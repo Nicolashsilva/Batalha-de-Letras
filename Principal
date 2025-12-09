@@ -5,9 +5,11 @@
 
 #define MAX_TENTATIVAS 6
 
-const char *palavrasFaceis[] = {"gato", "cachorro", "peixe", "cobra", "pato"};
+// Definição das palavras para cada nível de dificuldade
+const char *palavrasFaceis[] = {"bola", "casa", "gato", "pato", "foca"};
 const char *palavrasMedias[] = {"elefante", "girafa", "tigre", "leopardo", "rinoceronte"};
-const char *palavrasDificeis[] = {"hipopotamo", "ornitorrinco", "chimpanze", "orangotango", "aisopepodes"};
+const char *palavrasDificeis[] = {"hipopotamo", "ornitorrinco", "chimpanze", "orangotango", "crocodilo"};
+const char *palavrasExpert[] = {"astronauta", "micropaleontologia", "pneumoultramicroscopicosilicovulcanoconiose", "desoxirribonucleico", "anticonstitucionalissimamente"};
 
 void escolherPalavra(const char *palavras[], int tamanho, char *palavraEscolhida) {
     srand(time(NULL));
@@ -46,11 +48,11 @@ int todasLetrasForamAdivinhadas(const char *palavra, const char *letrasEscolhida
 
 int main() {
     int nivel;
-    char palavraEscolhida[20];
+    char palavraEscolhida[100];  // Aumentar o tamanho para palavras maiores
     char letrasEscolhidas[26] = {0};
     int tentativas = 0;
 
-    printf("Escolha um nivel de dificuldade (1 = facil, 2 = medio, 3 = dificil): ");
+    printf("Escolha um nivel de dificuldade (1 = facil, 2 = medio, 3 = dificil, 4 = expert): ");
     scanf("%d", &nivel);
 
     switch (nivel) {
@@ -62,6 +64,9 @@ int main() {
             break;
         case 3:
             escolherPalavra(palavrasDificeis, sizeof(palavrasDificeis)/sizeof(palavrasDificeis[0]), palavraEscolhida);
+            break;
+        case 4:
+            escolherPalavra(palavrasExpert, sizeof(palavrasExpert)/sizeof(palavrasExpert[0]), palavraEscolhida);
             break;
         default:
             printf("Nivel invalido!\n");
